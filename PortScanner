@@ -1,1 +1,31 @@
+import socket
+import time
 
+target = input("IP: ")
+start_port = int(input("Start Port: "))
+end_port = int(input("End Port: "))
+
+open_ports = []
+
+print(f"\nScanning {target} from {start_port} to {end_port}...\n")
+start_time = time.time()
+
+for port in range(start_port, end_port + 1):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(0.5)
+
+    try:
+        s.connect((target, port))
+        open_ports.append(port)
+        print(f"[OPEN]  {port}")
+    except:
+        pass
+
+    s.close()
+
+end_time = time.time()
+
+print("\nDone.")
+print("Open ports:", open_ports)
+print("Time:", round(end_time - start_time, 2), "seconds")
+#combo
